@@ -36,40 +36,18 @@ export default function StockDataGraph({
     },
   ]);
   const [time, setTime] = useState([DateTime.now().toJSDate()]);
-  const createNewData = function (o, h, l, c, pc, d, dp) {
-    return {
-      o: o,
-      h: h,
-      l: l,
-      c: c,
-      pc: pc,
-      d: d,
-      dp: dp,
-    };
-  };
   let chartData = {
     labels: time,
     datasets: [
       {
         label: "Price",
         data: data_list.map((data) => data.c),
-        borderColor: "black",
+        borderColor: "blue",
         borderWidth: 2,
       },
     ],
   };
-  //   const [chartData, setChartData] = useState({
-  //     labels: time,
-  //     datasets: [
-  //       {
-  //         label: "Users Gained ",
-  //         data: data_list.map((data) => data.c),
-  //         borderColor: "black",
-  //         borderWidth: 2,
-  //       },
-  //     ],
-  //   });
-  //   function onChangeInChartData(newStockData) {}
+
   function onNewData(o, h, l, c, pc, d, dp, timeForEvent) {
     if (data_list.length > graphWindowSize) {
       console.log("reducing");
@@ -115,7 +93,7 @@ export default function StockDataGraph({
       {
         label: "Price",
         data: data_list.map((data) => data.c),
-        borderColor: "black",
+        borderColor: "blue",
         borderWidth: 2,
       },
     ];

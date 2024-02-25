@@ -4,6 +4,9 @@ import { CategoryScale } from "chart.js";
 import { useEffect, useState } from "react";
 import { socket } from "./socket";
 import { DateTime } from "luxon";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import routes from "./routes";
+import Layout from "./components/Layout";
 
 import StockDataGraph from "./components/StockDataGraph";
 
@@ -49,21 +52,38 @@ function App() {
       socket.off("stockData", onFooEvent);
     };
   }, [fooEvent]);
-
-  return (
-    <div className="App">
-      <StockDataGraph
-        o={fooEvent.o}
-        h={fooEvent.h}
-        l={fooEvent.l}
-        c={fooEvent.c}
-        pc={fooEvent.pc}
-        d={fooEvent.d}
-        dp={fooEvent.dp}
-        timeForEvent={timeEvent}
-      />
-    </div>
-  );
+  const router = createBrowserRouter([
+    {
+      element: <Layout />,
+      // specify the routes defined in the
+      // routing layer directly
+      children: routes(
+        fooEvent.o,
+        fooEvent.h,
+        fooEvent.l,
+        fooEvent.c,
+        fooEvent.pc,
+        fooEvent.d,
+        fooEvent.dp,
+        timeEvent
+      ),
+    },
+  ]);
+  // return (
+  //   <div className="App">
+  //     <StockDataGraph
+  //       o={fooEvent.o}
+  //       h={fooEvent.h}
+  //       l={fooEvent.l}
+  //       c={fooEvent.c}
+  //       pc={fooEvent.pc}
+  //       d={fooEvent.d}
+  //       dp={fooEvent.dp}
+  //       timeForEvent={timeEvent}
+  //     />
+  //   </div>
+  // );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
