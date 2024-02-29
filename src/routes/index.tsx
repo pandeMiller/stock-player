@@ -4,7 +4,7 @@ import PathConstants from "./PathConstants";
 const Home = React.lazy(() => import("../components/StockDataGraph"));
 // other page components...
 const About = React.lazy(() => import("../pages/About"));
-
+const Query = React.lazy(() => import("../pages/Query"));
 const routes = function (a, b, c, d, e, f, g, timeFoEvent) {
   return [
     {
@@ -23,6 +23,7 @@ const routes = function (a, b, c, d, e, f, g, timeFoEvent) {
       ),
     },
     // other mappings ...
+    { path: PathConstants.QUERY, element: <Query /> },
     { path: PathConstants.ABOUT, element: <About /> },
   ];
 };
