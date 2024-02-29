@@ -8,13 +8,17 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import routes from "./routes";
 import Layout from "./components/Layout";
 
-import StockDataGraph from "./components/StockDataGraph";
+const STOCK_DATA_EMIT_EVENT_NAME_AAPL = "stockDataAapl";
+const STOCK_DATA_EMIT_EVENT_NAME_META = "stockDataMeta";
+const STOCK_DATA_EMIT_EVENT_NAME_GOOG = "stockDataGoog";
+const STOCK_DATA_EMIT_EVENT_NAME_AMZN = "stockDataAmzn";
+const STOCK_DATA_EMIT_EVENT_NAME_NFLX = "stockDataNflx";
 
 Chart.register(CategoryScale);
 
 function App() {
   const [isConnected, setIsConnected] = useState(socket.connected);
-  const [fooEvent, setFooEvent] = useState({
+  const [quoteEvent, setquoteEvent] = useState({
     o: 0.0,
     h: 0.0,
     l: 0.0,
@@ -38,7 +42,7 @@ function App() {
 
     function onFooEvent(value) {
       console.log(value);
-      setFooEvent(value);
+      setquoteEvent(value);
       setTimeEvent(DateTime.now().toJSDate());
     }
 
@@ -51,38 +55,24 @@ function App() {
       socket.off("disconnect", onDisconnect);
       socket.off("stockData", onFooEvent);
     };
-  }, [fooEvent]);
+  }, [quoteEvent]);
   const router = createBrowserRouter([
     {
       element: <Layout />,
       // specify the routes defined in the
       // routing layer directly
       children: routes(
-        fooEvent.o,
-        fooEvent.h,
-        fooEvent.l,
-        fooEvent.c,
-        fooEvent.pc,
-        fooEvent.d,
-        fooEvent.dp,
+        quoteEvent.o,
+        quoteEvent.h,
+        quoteEvent.l,
+        quoteEvent.c,
+        quoteEvent.pc,
+        quoteEvent.d,
+        quoteEvent.dp,
         timeEvent
       ),
     },
   ]);
-  // return (
-  //   <div className="App">
-  //     <StockDataGraph
-  //       o={fooEvent.o}
-  //       h={fooEvent.h}
-  //       l={fooEvent.l}
-  //       c={fooEvent.c}
-  //       pc={fooEvent.pc}
-  //       d={fooEvent.d}
-  //       dp={fooEvent.dp}
-  //       timeForEvent={timeEvent}
-  //     />
-  //   </div>
-  // );
   return <RouterProvider router={router} />;
 }
 

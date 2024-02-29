@@ -50,9 +50,6 @@ export default function StockDataGraph({
 
   function onNewData(o, h, l, c, pc, d, dp, timeForEvent) {
     if (data_list.length > graphWindowSize) {
-      console.log("reducing");
-      console.log(data_list.length);
-      //   console.log(data_list.filter((data, idx) => idx !== 0));
       const newDataList = data_list.slice(1, data_list.length);
       const newTime = time.slice(1, time.length);
       setDataList(newDataList);
