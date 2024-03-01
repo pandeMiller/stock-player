@@ -17,7 +17,33 @@ const STOCK_DATA_EMIT_EVENT_NAME_NFLX = "stockDataNflx";
 Chart.register(CategoryScale);
 
 function App() {
+  const initialValue = {
+    o: 0.0,
+    h: 0.0,
+    l: 0.0,
+    c: 0.0,
+    pc: 0.0,
+    d: 0.0,
+    dp: 0.0,
+    dt: DateTime.now().toJSDate(),
+  };
+  const windowSize = 5;
   const [isConnected, setIsConnected] = useState(socket.connected);
+  const [quoteEventAapl, setQuoteEventAapl] = useState(initialValue);
+  const [quoteEventsAapl, setQuoteEventsAapl] = useState([
+    initialValue,
+    initialValue,
+    initialValue,
+    initialValue,
+    initialValue,
+  ]);
+  const [quoteEventsGoog, setQuoteEventsGoog] = useState([
+    initialValue,
+    initialValue,
+    initialValue,
+    initialValue,
+    initialValue,
+  ]);
   const [quoteEvent, setquoteEvent] = useState({
     o: 0.0,
     h: 0.0,
@@ -40,37 +66,35 @@ function App() {
       setIsConnected(false);
     }
 
-    function onFooEvent(value) {
-      console.log(value);
-      setquoteEvent(value);
-      setTimeEvent(DateTime.now().toJSDate());
+    function onApplQuoteEvent(value) {
+      // setquoteEvent(value);
+      value["dt"] = DateTime.now().toJSDate();
+      console.log("on getting appl event");
+      // console.log(value);
+
+      if (quoteEventsAapl.length >= windowSize) {
+        const newDataList = quoteEventsAapl.slice(1, quoteEventsAapl.length);
+        setQuoteEventsAapl([...newDataList, value]);
+      }
+      // setTimeEvent(DateTime.now().toJSDate());
     }
 
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
-    socket.on("stockData", onFooEvent);
+    socket.on("stockDataAapl", onApplQuoteEvent);
 
     return () => {
       socket.off("connect", onConnect);
       socket.off("disconnect", onDisconnect);
-      socket.off("stockData", onFooEvent);
+      socket.off("stockData", onApplQuoteEvent);
     };
-  }, [quoteEvent]);
+  }, [quoteEventsAapl]);
   const router = createBrowserRouter([
     {
       element: <Layout />,
       // specify the routes defined in the
       // routing layer directly
-      children: routes(
-        quoteEvent.o,
-        quoteEvent.h,
-        quoteEvent.l,
-        quoteEvent.c,
-        quoteEvent.pc,
-        quoteEvent.d,
-        quoteEvent.dp,
-        timeEvent
-      ),
+      children: routes({ AAPL: quoteEventsAapl }),
     },
   ]);
   return <RouterProvider router={router} />;

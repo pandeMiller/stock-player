@@ -4,17 +4,14 @@ import PathConstants from "../routes/PathConstants";
 
 export default function Header() {
   return (
-    <div className="container">
+    <div className="container mt-5">
       {/* <div className="container-fluid"> */}
       {/* <h1 className="title"> */}
       {/* <Link to={PathConstants.HOME}>Realtime</Link> */}
       {/* <Link to={PathConstants.QUERY}>Query</Link>
           <Link to={PathConstants.ABOUT}>About</Link> */}
       {/* </h1> */}
-      <nav
-        className="navbar bg-primary navbar-expand-lg bg-body-tertiary "
-        data-bs-theme="dark"
-      >
+      <nav className="navbar bg-primary navbar-expand-lg bg-body-tertiary ">
         <div className="container-fluid">
           <div className="collapse navbar-collapse ">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
