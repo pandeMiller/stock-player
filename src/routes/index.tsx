@@ -8,7 +8,7 @@ const routes = function (stockDataListMap) {
   return [
     {
       path: PathConstants.HOME,
-      element: <Home AAPL={stockDataListMap} />,
+      element: <Home stockDataMap={stockDataListMap} />,
     },
     { path: PathConstants.QUERY, element: <Query /> },
     { path: PathConstants.ABOUT, element: <About /> },

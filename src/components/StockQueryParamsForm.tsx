@@ -12,7 +12,7 @@ function StockQueryParamsForm() {
   const [endDate, setEndDate] = useState(new Date());
   const [ticker, setTicker] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const tickers = ["AAPL", "GOOGL"];
+  const tickers = ["META", "AAPL", "AMZN", "NFLX", "GOOG"];
   function handleStartDateChange(event) {
     setStartDate(event.target.value);
   }
