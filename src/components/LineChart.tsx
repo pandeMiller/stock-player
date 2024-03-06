@@ -1,5 +1,4 @@
 import React from "react";
-import "chartjs-adapter-luxon";
 
 import { Line } from "react-chartjs-2";
 function LineChart({ chartData }) {
@@ -12,16 +11,10 @@ function LineChart({ chartData }) {
         <Line
           data={chartData}
           options={{
-            // plugins: {
-            //   legend: {
-            //     display: true,
-            //   },
-            // },
             scales: {
               x: {
                 type: "time",
                 time: {
-                  // Luxon format string
                   tooltipFormat: "DD T",
                 },
                 title: {

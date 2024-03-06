@@ -1,5 +1,6 @@
 // import ExerciseButtom from "./components/ExerciseButton";
 import Chart from "chart.js/auto";
+import "chartjs-adapter-luxon";
 import { CategoryScale } from "chart.js";
 import { useEffect, useState } from "react";
 import { socket } from "./socket";
@@ -27,6 +28,7 @@ function App() {
     dp: 0.0,
     dt: DateTime.now().toJSDate(),
   };
+  // type t = typeof(initialValue);
   const windowSize = 5;
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [quoteEventsAapl, setQuoteEventsAapl] = useState([
@@ -89,19 +91,17 @@ function App() {
 
   useEffect(() => {
     function onApplQuoteEvent(value) {
-      // setquoteEvent(value);
       value["dt"] = DateTime.now().toJSDate();
       console.log("on getting appl event");
 
       if (quoteEventsAapl.length >= windowSize) {
         const newDataList = quoteEventsAapl.slice(1, quoteEventsAapl.length);
         setQuoteEventsAapl([...newDataList, value]);
-        // console.log(quoteEventsAapl);
       }
     }
-    socket.on("stockDataAapl", onApplQuoteEvent);
+    socket.on(STOCK_DATA_EMIT_EVENT_NAME_AAPL, onApplQuoteEvent);
     return () => {
-      socket.off("stockDataAapl", onApplQuoteEvent);
+      socket.off(STOCK_DATA_EMIT_EVENT_NAME_AAPL, onApplQuoteEvent);
     };
   }, [quoteEventsAapl]);
 
@@ -115,9 +115,9 @@ function App() {
         setQuoteEventsGoog([...newDataList, value]);
       }
     }
-    socket.on("stockDataGoog", onGoogQuoteEvent);
+    socket.on(STOCK_DATA_EMIT_EVENT_NAME_GOOG, onGoogQuoteEvent);
     return () => {
-      socket.off("stockDataGoog", onGoogQuoteEvent);
+      socket.off(STOCK_DATA_EMIT_EVENT_NAME_GOOG, onGoogQuoteEvent);
     };
   }, [quoteEventsGoog]);
 
@@ -131,9 +131,9 @@ function App() {
         setQuoteEventsMeta([...newDataList, value]);
       }
     }
-    socket.on("stockDataMeta", onMetaQuoteEvent);
+    socket.on(STOCK_DATA_EMIT_EVENT_NAME_META, onMetaQuoteEvent);
     return () => {
-      socket.off("stockDataMeta", onMetaQuoteEvent);
+      socket.off(STOCK_DATA_EMIT_EVENT_NAME_META, onMetaQuoteEvent);
     };
   }, [quoteEventsMeta]);
 
@@ -147,9 +147,9 @@ function App() {
         setQuoteEventsAmzn([...newDataList, value]);
       }
     }
-    socket.on("stockDataAmzn", onAmznQuoteEvent);
+    socket.on(STOCK_DATA_EMIT_EVENT_NAME_AMZN, onAmznQuoteEvent);
     return () => {
-      socket.off("stockDataAmzn", onAmznQuoteEvent);
+      socket.off(STOCK_DATA_EMIT_EVENT_NAME_AMZN, onAmznQuoteEvent);
     };
   }, [quoteEventsAmzn]);
 
@@ -163,9 +163,9 @@ function App() {
         setQuoteEventsNflx([...newDataList, value]);
       }
     }
-    socket.on("stockDataNflx", onNflxQuoteEvent);
+    socket.on(STOCK_DATA_EMIT_EVENT_NAME_NFLX, onNflxQuoteEvent);
     return () => {
-      socket.off("stockDataNflx", onNflxQuoteEvent);
+      socket.off(STOCK_DATA_EMIT_EVENT_NAME_NFLX, onNflxQuoteEvent);
     };
   }, [quoteEventsNflx]);
   const router = createBrowserRouter([

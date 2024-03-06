@@ -3,6 +3,9 @@ import StockDataGraph from "./StockDataGraph";
 import { useEffect, useState } from "react";
 import NewStockDataGraph from "./NewStockDataGraph";
 
+export enum chooseStockGraphTestIds {
+  CHOOSE_STOCK_GRAPH_TOP_NAVBAR_TEST_ID = "home-top-nav-bar",
+}
 interface StockData {
   o: number;
   h: number;
@@ -26,8 +29,6 @@ export default function ChooseStockGraph({
   const [selectedTicker, setSelectedTicker] = useState(null);
   useEffect(() => {
     setFaangStockData(stockDataMap);
-    console.log("logging faangStockData");
-    console.log(stockDataMap);
   }, [stockDataMap]);
 
   function selectTicker(event) {
@@ -35,7 +36,7 @@ export default function ChooseStockGraph({
   }
   return (
     <>
-      <Container className="mt-3">
+      <Container data-testid="home-top-nav-bar" className="mt-3">
         <Form.Select
           aria-label="Default select example"
           onChange={selectTicker}
