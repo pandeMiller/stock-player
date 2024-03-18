@@ -1,5 +1,7 @@
 # Demo
-https://github.com/pandeMiller/stock-player/blob/master/Stock_player_demo.mov
+
+https://github.com/pandeMiller/stock-player/assets/45203700/e1114425-61ae-4e3d-b376-062f29de9783
+
 
 # React + TypeScript + Vite
 
