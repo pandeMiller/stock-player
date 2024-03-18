@@ -1,3 +1,6 @@
+# Demo
+https://github.com/pandeMiller/stock-player/blob/master/Stock_player_demo.mov
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
